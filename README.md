@@ -5,6 +5,7 @@ ChestXray-Report-Generation:
 📊 Dataset:
 
 After cleaning, the dataset contains 59,030 chest X-ray images with paired radiology reports.
+
 • Train: 47,222
 • Validation: 5,912
 • Test: 5,896
