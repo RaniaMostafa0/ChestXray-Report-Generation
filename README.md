@@ -16,18 +16,27 @@ After cleaning, the dataset contains 59,030 chest X-ray images with paired radio
 
 - Encoder: ResNet-50 → extracts visual features
 - Decoder: BERT → generates textual reports
+- 
 Prediction heads:
 
 • Masked Language Modeling (MLM)
+
 • Image–Report Matching (IRM)
+
 • Multi-label classification (14 disease labels)
+
 • Loss function: Combined (MLM + IRM + BCE)
 
 🏋️ Training:
+
 - Optimizer: Adam
+  
 - Epochs: 20
+  
 - Batch size: 4
+  
 - Metrics: Training/Validation Loss, F1 Score
+
 - Best Model: Saved at epoch 19 with F1 = 0.5502
 
 📈 Results:
