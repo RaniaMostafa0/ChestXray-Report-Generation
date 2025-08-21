@@ -16,7 +16,6 @@ After cleaning, the dataset contains 59,030 chest X-ray images with paired radio
 
 - Encoder: ResNet-50 → extracts visual features
 - Decoder: BERT → generates textual reports
-- 
 Prediction heads:
 
 • Masked Language Modeling (MLM)
@@ -40,25 +39,29 @@ Prediction heads:
 - Best Model: Saved at epoch 19 with F1 = 0.5502
 
 📈 Results:
+
 Training Metrics:
+
 • Train Loss: 1.7191
+
 • Validation Loss: 2.0652
+
 • Best F1 Score: 0.5502
 
 Classification Report (Test Set):
+
 • Micro F1: 0.55
+
 • Macro F1: 0.21
+
 • Weighted F1: 0.44
+
 • Test Loss: 2.0713
 
 Report Generation (BERTScore with SciBERT):
+
 • Precision: 0.6380
+
 • Recall: 0.6238
+
 • F1: 0.6292
-Notable cases:
-
-Pleural Effusion → FP = 368, TP = 556
-
-Pneumothorax → FP = 329, TP = 554
-
-Atelectasis → FP = 117, TP = 134
