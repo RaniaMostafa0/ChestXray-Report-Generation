@@ -40,15 +40,7 @@ Prediction heads:
 
 📈 Results:
 
-Training Metrics:
-
-• Train Loss: 1.7191
-
-• Validation Loss: 2.0652
-
-• Best F1 Score: 0.5502
-
-Classification Report (Test Set):
+Multi-label Classification:
 
 • Micro F1: 0.55
 
@@ -56,7 +48,8 @@ Classification Report (Test Set):
 
 • Weighted F1: 0.44
 
-• Test Loss: 2.0713
+• Test Loss: 2.07
+
 
 Report Generation (BERTScore with SciBERT):
 
