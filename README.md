@@ -4,7 +4,9 @@ ChestXray-Report-Generation:
 
 📊 Dataset:
 
-After cleaning, the dataset contains 59,030 chest X-ray images with paired radiology reports.
+This project is based on the Curated CXR Report Generation Dataset (Kaggle) (https://www.kaggle.com/datasets/financekim/curated-cxr-report-generation-dataset), originally sourced from MIMIC-CXR and OpenI.
+
+A processed version of the dataset was used, resulting in 59,030 chest X-ray images with paired radiology reports:
 
 • Train: 47,222
 
