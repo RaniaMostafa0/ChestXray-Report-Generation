@@ -3,6 +3,7 @@ ChestXray Report Generation:
 - A multimodal deep learning model for chest X-rays that generates diagnostic reports, predicts disease labels, and learns image–report alignment. The architecture combines ResNet-50 as the image encoder and a BERT-based decoder for report generation, trained jointly with language modeling, image–report matching, and multi-label classification tasks.
 
 📊 Dataset:
+
 This project is based on the Curated CXR Report Generation Dataset (Kaggle) (https://www.kaggle.com/datasets/financekim/curated-cxr-report-generation-dataset), originally sourced from MIMIC-CXR and OpenI.
 
 A processed version of the dataset was used, resulting in 59,030 chest X-ray images with paired radiology reports:
