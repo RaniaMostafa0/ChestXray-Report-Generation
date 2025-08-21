@@ -1,8 +1,9 @@
 ChestXray-Report-Generation:
 
--A multimodal deep learning model for chest X-rays that generates diagnostic reports, predicts disease labels, and learns image–report alignment. The architecture combines ResNet-50 as the image encoder and a BERT-based decoder for report generation, trained jointly with language modeling, image–report matching, and multi-label classification tasks.
+- A multimodal deep learning model for chest X-rays that generates diagnostic reports, predicts disease labels, and learns image–report alignment. The architecture combines ResNet-50 as the image encoder and a BERT-based decoder for report generation, trained jointly with language modeling, image–report matching, and multi-label classification tasks.
 
 📊 Dataset:
+
 After cleaning, the dataset contains 59,030 chest X-ray images with paired radiology reports.
 • Train: 47,222
 • Validation: 5,912
