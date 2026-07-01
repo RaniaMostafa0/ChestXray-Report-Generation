@@ -17,8 +17,9 @@ Transfer learning was used by initializing the ResNet-50 backbone with ImageNet-
 
 ## Dataset
 
-- **Source:** image IDs follow MIMIC-CXR's study-ID convention (`sXXXXXXXX`) — not explicitly named in code.
-- **Preprocessing:** images resized to 512×512; boilerplate comparison phrases (*"Compared to prior..."*, *"No significant change as compared..."*) stripped from report text via regex; rows left empty after stripping, or containing placeholder text (`___`), were dropped along with their images. Reports tokenized with `bert-base-uncased`, max length 256.
+- **Source:** [MIMIC-CXR Dataset (Kaggle)](https://www.kaggle.com/datasets/simhadrisadaram/mimic-cxr-dataset) — ~91,685 chest X-ray image–report pairs originally.
+- **Cleaning impact:** ~35% of the original data was dropped — 31,978 rows had placeholder text (`___`) instead of a real report, and a further 677 rows became empty after boilerplate comparison phrases (e.g. *"Compared to prior..."*, *"No significant change as compared..."*) were stripped via regex. Final clean dataset: 59,030 pairs.
+- **Preprocessing:** images resized to 512×512; reports tokenized with `bert-base-uncased`, max length 256.
 - **Labels:** 10 disease/finding classes extracted via keyword/regex matching directly on report text (**not** clinician-annotated ground truth): `cardiomegaly, edema, consolidation, atelectasis, pleural_effusion, pneumonia, pneumothorax, lung_opacity, fracture, support_devices`.
 - **Split:** 59,030 image-report pairs total — 47,222 train / 5,912 val / 5,896 test.
 
@@ -43,8 +44,6 @@ Transfer learning was used by initializing the ResNet-50 backbone with ImageNet-
 | Recall | 0.6238 |
 | F1 | 0.6292 |
 
-The gap between micro-F1 (0.55) and macro-F1 (0.21) reflects severe class imbalance — the model performs well only on the two most prevalent findings and produces 0.00 F1 on four rarer classes, inflating micro-F1 independently of per-class performance (same pattern as pixel accuracy vs. mean IoU in a segmentation task).
-
 ### Per-Label Results (test set)
 
 | Label | Precision | Recall | F1 | Support |
@@ -60,7 +59,7 @@ The gap between micro-F1 (0.55) and macro-F1 (0.21) reflects severe class imbala
 | support_devices | 0.00 | 0.00 | 0.00 | 199 |
 | lung_opacity | 0.00 | 0.00 | 0.00 | 31 |
 
-Large, high-prevalence classes (pleural effusion, pneumothorax) segment/classify well; low-prevalence or visually subtle classes (fracture, support devices, lung opacity, pneumonia, consolidation) collapse to zero — driven by both class imbalance and weak (regex-derived) label quality rather than model capacity alone.
+Large, high-prevalence classes (pleural effusion, pneumothorax) classify well; low-prevalence or visually subtle classes (fracture, support devices, lung opacity, pneumonia, consolidation) collapse to zero — driven by both class imbalance and weak (regex-derived) label quality rather than model capacity alone.
 
 ## Qualitative Testing
 
@@ -76,32 +75,3 @@ Generated reports were spot-checked against reference reports on the validation 
 ## Project Structure
 ├── 01_Data_Cleaning.ipynb     # image/CSV consistency checks, placeholder-row removal, boilerplate stripping, label extraction
 ├── 02_Model_Training.ipynb    # dataset class, model definition, training loop, evaluation, BERTScore scoring
-
-> Currently notebook-only — no standalone `train.py`/`evaluate.py`/`inference.py` scripts exist yet.
-
-## Setup
-
-```bash
-git clone <repo-url>
-cd chest-xray-report-generation
-
-python -m venv venv
-venv\Scripts\activate        # Windows
-# source venv/bin/activate   # macOS/Linux
-
-pip install torch torchvision transformers pandas numpy scikit-learn matplotlib tqdm bert_score
-```
-
-## Reproducing Results
-
-```bash
-# 1. Clean the raw data (image/CSV matching, boilerplate stripping, label extraction)
-# Run: 01_Data_Cleaning.ipynb
-# Produces: train_split_clean.csv, valid_split_clean.csv, test_split_clean.csv
-
-# 2. Train and evaluate the model
-# Run: 02_Model_Training.ipynb
-# Trains for 20 epochs, saves best_model_epoch.pt, evaluates on val/test,
-# generates sample reports, and computes BERTScore against references.
-# Expected: test micro-F1 ≈ 0.55, BERTScore F1 ≈ 0.63
-```
