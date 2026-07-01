@@ -13,6 +13,46 @@ Report generation was framed as a single multi-task model rather than separate c
 - **Heads:** `lm_head` (vocab-size, next-token prediction), `irm_head` (1, binary match prediction), `label_head` (10, multi-label disease classification) — all sharing the same encoder/decoder backbone.
 - **Loss:** `CrossEntropyLoss` (language modeling, pad-masked) + `BCEWithLogitsLoss` (IRM) + `BCEWithLogitsLoss` (multi-label classification), summed.
 
+```text
+                           Chest X-ray (512×512)
+                                     │
+                                     ▼
+                      ┌────────────────────────┐
+                      │   ResNet-50 Encoder    │
+                      │ (ImageNet Pretrained)  │
+                      └────────────────────────┘
+                                     │
+                           2048-dim feature vector
+                                     │
+                                     ▼
+                      ┌────────────────────────┐
+                      │   Linear Projection    │
+                      │      2048 → 768        │
+                      └────────────────────────┘
+                                     │
+                           Single Image Token
+                                     │
+                   Cross-Attention    │
+                                     ▼
+      ┌─────────────────────────────────────────────────────┐
+      │              BERT Decoder (Cross-Attention)         │
+      │                                                     │
+      │  Previous Tokens + Image Embedding → Hidden States  │
+      └─────────────────────────────────────────────────────┘
+                     │                │                 │
+                     ▼                ▼                 ▼
+          ┌────────────────┐ ┌────────────────┐ ┌────────────────────┐
+          │ Report         │ │ Image-Report  │ │ Disease            │
+          │ Generation     │ │ Matching Head │ │ Classification Head│
+          │ (LM Head)      │ │ (Binary)      │ │ (10 Labels)        │
+          └────────────────┘ └────────────────┘ └────────────────────┘
+                     │                │                 │
+                     └────────────────┼─────────────────┘
+                                      ▼
+                         Total Training Loss
+         CrossEntropy(LM) + BCE(IRM) + BCE(Multi-label)
+```
+
 Transfer learning was used by initializing the ResNet-50 backbone with ImageNet-pretrained weights; the decoder was trained from scratch with a BERT-style architecture.
 
 ## Dataset
