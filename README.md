@@ -72,6 +72,10 @@ Generated reports were spot-checked against reference reports on the validation 
 - Comparison-to-prior phrasing is inconsistent, plausibly a residual effect of the boilerplate-stripping step during cleaning.
 - No radiologist review was performed — all metrics are automatic (F1, BERTScore) only.
 
+
 ## Project Structure
+ 
+```
 ├── 01_Data_Cleaning.ipynb     # image/CSV consistency checks, placeholder-row removal, boilerplate stripping, label extraction
 ├── 02_Model_Training.ipynb    # dataset class, model definition, training loop, evaluation, BERTScore scoring
+```
