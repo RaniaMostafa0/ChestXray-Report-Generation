@@ -109,8 +109,6 @@ Generated reports were spot-checked against reference reports on the validation 
 
 **Limitations:**
 - Hallucinates specific findings or devices (e.g. endotracheal tube position, PICC line) not present in the ground-truth report.
-- Comparison-to-prior phrasing is inconsistent, plausibly a residual effect of the boilerplate-stripping step during cleaning.
-- No radiologist review was performed — all metrics are automatic (F1, BERTScore) only.
 
 
 ## Project Structure
